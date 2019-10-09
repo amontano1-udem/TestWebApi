@@ -17,10 +17,13 @@ namespace TestWebApi
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args)                
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureAppConfiguration(configHost => {
+                    configHost.AddJsonFile("config.json", false, true);
                 });
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace TestWebApi.Controllers
 {
@@ -6,10 +7,16 @@ namespace TestWebApi.Controllers
     [Route("[controller]")]
     public class StringController : ControllerBase
     {
+        public string appName { get; set; }
+
+        public StringController(IConfiguration config){
+            appName = config.GetValue<string>("applicationName");
+        }
+
         [HttpGet]
         public string Get()
         {
-            return "It works!";
+            return appName;
             // var rng = new Random();
             // return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             // {
