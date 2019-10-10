@@ -20,7 +20,7 @@ namespace TestWebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public Post GetOne(long id){
+        public Post GetOne([FromRoute] long id){
             foreach(var post in posts){
                 if(post.Id == id){
                     return post;
@@ -36,8 +36,9 @@ namespace TestWebApi.Controllers
         }
 
         [HttpPost]
-        public List<Post> Create(){
-            var newPost = new Post{Id = 5, Time = "10:24", User = "bob", Message = "Prueba 5"};
+        public List<Post> Create([FromForm] Post newPost){
+            // var newPost = new Post{Id = 5, Time = "10:24", User = "bob", Message = "Prueba 5"};
+            newPost.Id = posts.Count + 1;
             posts.Add(newPost);
             
             return posts;
@@ -45,10 +46,12 @@ namespace TestWebApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public List<Post> Update(long id){
-            foreach(var posts in posts){
-                if(posts.Id == id){
-                    posts.Time = "10:25";
+        public List<Post> Update([FromRoute] long id, [FromBody] Post updatedPost){
+            foreach(var post in posts){
+                if(post.Id == id){
+                    post.Message = updatedPost.Message;
+                    post.Time = updatedPost.Time;
+                    post.User = updatedPost.User;
                 }
             }
 
@@ -57,16 +60,13 @@ namespace TestWebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public List<Post> Delete(long id){
-            var PostToRemove = new Post();
-
-            foreach(var posts in posts){
-                if(posts.Id == id){
-                    PostToRemove = posts;
+        public List<Post> Delete([FromRoute] long id){
+            foreach(var post in posts){
+                if(post.Id == id){
+                    posts.Remove(post);
+                    break;
                 }
-            }
-
-            posts.Remove(PostToRemove);
+            }          
 
             return posts;
         }
