@@ -26,6 +26,7 @@ namespace TestWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddXmlSerializerFormatters();
             services.AddControllers();
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -56,6 +57,7 @@ namespace TestWebApi
 
             app.UseAuthorization();
             
+            // app.UseMvc();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

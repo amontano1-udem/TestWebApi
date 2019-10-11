@@ -20,6 +20,7 @@ namespace TestWebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Produces("application/json")]
         public Post GetOne([FromRoute] long id){
             foreach(var post in posts){
                 if(post.Id == id){
@@ -31,11 +32,14 @@ namespace TestWebApi.Controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
         public List<Post> GetAll(){
             return posts;
         }
 
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public List<Post> Create([FromBody] Post newPost){
             // var newPost = new Post{Id = 5, Time = "10:24", User = "bob", Message = "Prueba 5"};
             newPost.Id = posts.Count + 1;
@@ -46,6 +50,8 @@ namespace TestWebApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Consumes("application/xml")]
+        [Produces("application/xml")]
         public List<Post> Update([FromRoute] long id, [FromBody] Post updatedPost){
             foreach(var post in posts){
                 if(post.Id == id){
@@ -60,6 +66,7 @@ namespace TestWebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Produces("application/json")]
         public List<Post> Delete([FromRoute] long id){
             foreach(var post in posts){
                 if(post.Id == id){
