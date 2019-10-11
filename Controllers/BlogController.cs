@@ -36,7 +36,7 @@ namespace TestWebApi.Controllers
         }
 
         [HttpPost]
-        public List<Post> Create([FromForm] Post newPost){
+        public List<Post> Create([FromBody] Post newPost){
             // var newPost = new Post{Id = 5, Time = "10:24", User = "bob", Message = "Prueba 5"};
             newPost.Id = posts.Count + 1;
             posts.Add(newPost);
